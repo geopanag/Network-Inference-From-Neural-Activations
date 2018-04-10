@@ -12,7 +12,7 @@ The folder structure of the project is :
 
 code->	  The content of this folder
 data->	  Download the "small" dataset from https://www.kaggle.com/c/connectomics/data and extract it here. 
-	  Each network has three .txt files: the activations
+	  Each network has three .txt files: the activations, locations and ground truth connections of neurons
 results-> Will be filled with estimated connectivity matrices, evaluation metrics and time logs
 
 
