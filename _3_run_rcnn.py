@@ -1,8 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov 25 20:57:28 2017
-
 @author: george
 """
 import time
@@ -28,7 +26,7 @@ partial_corr = []
 for i in range(1,7):
     print(i)
     #--------- Load activations
-    activations_loc = "../data/fluorescence_iNet1_Size100_CC0"+str(i)+"inh.txt" 
+    activations_loc = "../Data/small/fluorescence_iNet1_Size100_CC0"+str(i)+"inh.txt" 
     neural_activations = parse_activations(activations_loc,partial=False)
     
     #---------  Compute partial correlations
@@ -39,7 +37,7 @@ for i in range(1,7):
     pcorr = pcorr/np.std(pcorr)
     partial_corr.append(pcorr)
     
-    positions_loc = "../data/networkPositions_iNet1_Size100_CC0"+str(i)+"inh.txt"
+    positions_loc = "../Data/small/networkPositions_iNet1_Size100_CC0"+str(i)+"inh.txt"
     positions = parse_neuron_positions(positions_loc)
     
     #--------- Unscatter, downsample, standardize
@@ -48,13 +46,13 @@ for i in range(1,7):
     activations.append(neural_activations.T)
     
     #--------- Connectivity matrices
-    network_loc = "../data/network_iNet1_Size100_CC0"+str(i)+"inh.txt"
+    network_loc = "../Data/small/network_iNet1_Size100_CC0"+str(i)+"inh.txt"
     neuron_connections = parse_neuron_connections(network_loc)
     connectivities.append(neuron_connections)
     
 
 #-------------------------------- Corss Validation (1 network test, 5 train)
-time_log = file("../results/time_rcnn.txt","w")
+time_log = file("../Data/results/time_rcnn.txt","a")
 for i in range(0,6):
     print("dataset "+str(i))
     
@@ -88,7 +86,7 @@ for i in range(0,6):
     nnmodel = nn.NeuralNet(net, placeholders)
     nnmodel.inspect_layers()
 
-    nntrainer = nn.NeuralTrainer(nnmodel, optimization, save='best', filepath="../results/dataset1_residual4.txt")
+    nntrainer = nn.NeuralTrainer(nnmodel, optimization, save='best', filepath="../Data/results/dataset1_residual4.txt")
     
     #---------  Train the NN
     train = {'inputs': X_train, 'targets': y_train, 'keep_prob_conv': 0.8, 'keep_prob_dense': 0.5, 'is_training': True}
@@ -100,7 +98,7 @@ for i in range(0,6):
     pred_lbl =  conutils.valid_eval_tfomics_partialcorr(nntrainer,test_act,test_pcor)
     
     #---------  Store the predictions and the respective ground truth connections
-    np.savetxt("../results/rcnn_"+str(i)+".csv", pred_lbl, delimiter=",")
+    np.savetxt("../Data/results/rcnn_"+str(i)+".csv", pred_lbl, delimiter=",")
     
     
     t = time.time()-start

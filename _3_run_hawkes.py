@@ -1,15 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov 25 21:00:55 2017
-
 @author: george
-
-Uses pyhawkes library
 """
 import time
 import pickle
 import os
+
+os.chdir("Path/To/Code")
 import gzip
 import numpy as np
 import pandas as pd
@@ -21,7 +19,7 @@ from pyhawkes.models import DiscreteTimeNetworkHawkesModelGammaMixtureSBM
 def fit_network_hawkes_svi(S, K, C, dt, dt_max,
                            output_path,
                            standard_model=None,
-                           N_iters=200,
+                           N_iters=100,
                            true_network=None):
     """
     From Scott Linderman's experiments in https://github.com/slinderman/pyhawkes/tree/master/experiments
@@ -93,31 +91,28 @@ dt_max = 0.08
 
 np.random.seed(2017)
 
-log = file("../results/time_hawkes.txt","w")
+log = file("../Data/results/time_hawkes.txt","a")
 for i in range(1,7):
-    for disc_meth in ["winning","chalearn"]: 
         
-        print("Now in :"+str(i)+"-"+disc_meth)
-            
-        activations_loc = "../data/small/discretized_"+disc_meth+"_"+str(i)+".csv" 
-        neuron_activations = pd.read_csv(activations_loc)
-        neuron_activations = neuron_activations.drop(neuron_activations.columns[0], 1)
-        neuron_activations = neuron_activations.values
-        neuron_activations = neuron_activations.astype(int)
-        
-	#------- Run the hawkes model
-        out = "../results/hawkes_/gibbs"+str(i)+"_"+disc_meth
-        start_time = time.time()
-        svi_models, timestamps = fit_network_hawkes_svi(neuron_activations, neuron_activations.shape[1], C, dt, dt_max, output_path=out)
+    print("Now in :"+str(i))
+    
+    neuron_activations = pd.read_csv("../Data/small/discretized_oasis2_"+str(i)+".csv" )
+    neuron_activations = neuron_activations.values
+    neuron_activations = neuron_activations.astype(int)
+    
+	    #------- Run the hawkes model
+    out = "../Data/hawkes/gibbs"+str(i)+"_"
+    start_time = time.time()
+    svi_models, timestamps = fit_network_hawkes_svi(neuron_activations, neuron_activations.shape[1], C, dt, dt_max, output_path=out)
 
-        #------- Store the model and the connectivity matrix        
-        W_svi = svi_models[-1].weight_model.expected_W()
-        pd.DataFrame(W_svi).to_csv("../results/hawkes_"+str(i)+"_"+disc_meth+".csv")
-        pickle.dump( svi_models, open( "../results/hawkes_"+str(i)+"_"+disc_meth+".p", "wb" ) )
-        t = time.time() - start_time
-        print(t)
-        log.write("time "+str(t)+" "+str(i)+" "+disc_meth)
-        log.write("\n")
-
+    #------- Store the model and the connectivity matrix        
+    W_svi = svi_models[-1].weight_model.expected_W()
+    pd.DataFrame(W_svi).to_csv("../Data/results/hawkes_"+str(i)+".csv",index=False)
+    pickle.dump( svi_models, open( "../Data/results/hawkes_"+str(i)+".p", "wb" ) )
+    t = time.time() - start_time
+    print(t)
+    log.write("time "+str(t)+" "+str(i))
+    log.write("\n")
+    
 log.close()
         

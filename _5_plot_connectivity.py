@@ -1,11 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Fri Dec 8 17:16:33 2017
-
 @author: george
-
-Plot heatmaps of inferred connectivity matrices
 """
 import numpy as np
 import pandas as pd
@@ -16,14 +12,14 @@ sns.set(style="white")
 from _1_utils import parse_neuron_connections
 
 
-disc_meth = "chalearn"
+disc_meth = "oasis"
 
 fig = plt.figure(1)
     
 fig.set_size_inches(19, 11)
 for i in range(1,7):
     #------------ Load ground truth
-    network_loc = "../data/small/network_iNet1_Size100_CC0"+str(i)+"inh.txt"
+    network_loc = "../Data/small/network_iNet1_Size100_CC0"+str(i)+"inh.txt"
     neuron_connections = parse_neuron_connections(network_loc)
     
     #------------ Load precision
@@ -80,6 +76,6 @@ for i in range(1,7):
     plt.yticks([])
     plt.tight_layout()
     
-fig.savefig('../figures/connectivities.png')
+fig.savefig('../figures/connectivity_heatmaps.png')
 
 

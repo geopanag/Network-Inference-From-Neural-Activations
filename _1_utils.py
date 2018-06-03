@@ -5,7 +5,7 @@ Created on Thu Nov 23 20:06:49 2017
 
 @author: george
 
-A set of utility functions to facilitate the experiment
+A set of utility functions to facilitate the experiments
 Some are costum made and others are taken and adjusted from the sources mentioned 
 """
 
@@ -13,8 +13,6 @@ from __future__ import division, print_function, absolute_import
 from copy import deepcopy
 import numpy as np
 from sklearn.metrics import roc_auc_score, roc_curve, precision_recall_curve, average_precision_score
-
-
 
 def parse_activations(loc_file,M = 179500,N=100,partial=False):
     """
@@ -184,8 +182,6 @@ def chalearn_discretization(F):
     return D.T    
 
 
-
-
 """         Preprocess of  Winning solution
 Based on https://github.com/asutera/kaggle-connectomics
 """
@@ -242,9 +238,6 @@ def winning_discretization(X, LP='f1', weights=True):
 
 
 
-"""         Preprocess of  Winning solution
-Based on https://github.com/asutera/kaggle-connectomics
-"""
 def downsample(fluor):
     """
     Takes a 2-D numpy array of fluorescence time series (in many cells) and returns a downsampled version, following the
@@ -288,27 +281,17 @@ Compute evaluation metrics
 based on Scott Linderman's Code https://github.com/slinderman/pyhawkes
 """
 def compute_auc_roc(A_true,Connectivity):
-    """
-    Compute the AUC score
-    """
-    
     A_flat = A_true.ravel()
     
     aucs = roc_auc_score(A_flat,Connectivity.ravel())
-    fprs, tprs, _ = roc_curve(A_flat, Connectivity.ravel())
 
-    return aucs, fprs, tprs
+    return aucs
 
 
 def compute_auc_prc(A_true, Connectivity, average="macro"):
-    """
-    Compute the AUC of the precision recall curve
-    """
-    
     A_flat = A_true.ravel()
     
-    aucs = average_precision_score(A_flat, Connectivity.ravel(), average=average)
-    precs, recalls, _ = precision_recall_curve(A_flat, Connectivity.ravel())
+    prcs = average_precision_score(A_flat, Connectivity.ravel(), average=average)
     
-    return aucs, precs, recalls
+    return prcs
 

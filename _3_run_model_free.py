@@ -1,17 +1,20 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov 18 09:19:05 2017
-
 @author: george
 
+Run model free based inference in all 6 networks for the different discretization techniques
 Infer a network given activation time series using
 	Correlation
-	Precision with PCA
-	Precision with Graphical Lasso
+	Partial Correlation with PCA
+	Partial Correlation with Graphical Lasso
 """
-import numpy as np
+import os
+os.chdir("Path/To/Code")
+
+import pandas as pd
 import time
+import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.covariance import GraphLassoCV
 
@@ -45,7 +48,6 @@ def infer_correlation(neuron_activations, timeLag = 1):
     np.fill_diagonal(H,0)
     return H
 
-    
 def infer_precision_pca(neuron_activations):
     # Based on winning solution of the competition
     pca = PCA(whiten=True, n_components=int(0.8 * neuron_activations.shape[1])).fit(neuron_activations)
@@ -109,5 +111,50 @@ def infer_transfer_entropy(neuron_activations):
                 
     return connectivity_mat
             
+
+
+
+log = file("../Data/results/time_model_free.txt","w")
+disc_meth = "oasis"
+for i in range(1,7) :
+
+    print("Now in :"+str(i)+"-"+disc_meth)
+   
+    activations_loc = "../Data/small/discretized_"+disc_meth+"_"+str(i)+".csv" 
+    neuron_activations = pd.read_csv(activations_loc)
+    neuron_activations = neuron_activations.values
+    
+    #---------- Run all the metrics and store the connectivity results and computational time
+    start_time = time.time()
+
+    correlation_mat = infer_correlation( neuron_activations )
+    pd.DataFrame(correlation_mat).to_csv("../Data/results/correlation_"+disc_meth+"_"+str(i)+".csv")
+
+    t = time.time() - start_time
+    log.write("correlation time "+str(t)+" "+str(i)+" "+disc_meth)
+    log.write("\n")
+    
+    
+    start_time = time.time()
+
+    precision_mat1 = infer_precision_pca( neuron_activations )
+    pd.DataFrame(precision_mat1).to_csv("../Data/results/pca_"+disc_meth+"_"+str(i)+".csv")
+
+    t = time.time() - start_time
+    log.write("precision pca time "+str(t)+" "+str(i)+" "+disc_meth)
+    log.write("\n")
+    
+    
+    start_time = time.time()
+
+    precision_mat2 = infer_precision_glasso( neuron_activations )
+    pd.DataFrame(precision_mat2).to_csv("../Data/results/glasso_"+disc_meth+"_"+str(i)+".csv")
+
+    t = time.time() - start_time
+    log.write("precision glasso time "+str(t)+" "+str(i)+" "+disc_meth)
+    log.write("\n")
+    
+log.close()
+
 
 
