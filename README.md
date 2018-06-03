@@ -20,13 +20,13 @@ _1_utils contains functions (either costum or found online, with appropriate ref
 
 _2_preprocess runs the discretization algorithms and produces discritized versions of the activation series <br />
 
-_3_run_model_free Runs model free approaches to all networks and stores the results <br />
+_3_run_model_free runs model free approaches <br />
 
-_3_run_hawkes Runs hawkes process model based on pyhawkes <br />
+_3_run_hawkes runs hawkes process model based on pyhawkes <br />
 
 _3_run_rcnn runs residual convolutional neural network with the aid of conutiles, tfomics and model_zoo <br />
 
-_3_run_influence Runs the model that is based on influence estimation in social networks <br />
+_3_run_influence runs the model that is based on influence estimation in social networks <br />
 
 _4_evaluate uses the predicted connectivity matrices stored in results and the ground truth to calculate evaluation metrics <br />
 
