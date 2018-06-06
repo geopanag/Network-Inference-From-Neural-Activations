@@ -68,11 +68,6 @@ plt.tick_params(
     top=False,         # ticks along the top edge are off
     labelbottom=False) 
 
-#for i in range(0,99):
-#    plt.figure(i)
-#    plt.plot(neural_activations[1:3000,i])
-#    plt.savefig("../Figures/value" + str(i) + ".png")
-
 
 plt.figure(figsize=(10.0, 5.0))    
 f, axarr = plt.subplots(3, sharex=True)
