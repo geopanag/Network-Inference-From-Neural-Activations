@@ -91,7 +91,7 @@ for i in range(0,6):
     #---------  Train the NN
     train = {'inputs': X_train, 'targets': y_train, 'keep_prob_conv': 0.8, 'keep_prob_dense': 0.5, 'is_training': True}
     data = {'train': train}
-    learn.train_minibatch(nntrainer, data, batch_size=100, num_epochs=1, 
+    learn.train_minibatch(nntrainer, data, batch_size=100, num_epochs=200, 
                           patience=20, verbose=2, shuffle=True)
     
     #---------  Predict the connectivity of the test network
