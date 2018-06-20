@@ -9,7 +9,11 @@ Preprocess the 6 datasets and store them
 3. Threshold at 0.12
 """
 import os
+<<<<<<< HEAD
 os.chdir("/Path/To/Code")
+=======
+os.chdir("/home/george/Desktop/Network-Inference-From-Neural-Activations/Code")
+>>>>>>> 48330085e47c63f92a0f2ee211e8889b8e93bb10
 
 
 import time
@@ -71,11 +75,14 @@ plt.tick_params(
     top=False,         # ticks along the top edge are off
     labelbottom=False) 
 
+<<<<<<< HEAD
 #for i in range(0,99):
 #    plt.figure(i)
 #    plt.plot(neural_activations[1:3000,i])
 #    plt.savefig("../Figures/value" + str(i) + ".png")
 
+=======
+>>>>>>> 48330085e47c63f92a0f2ee211e8889b8e93bb10
 
 plt.figure(figsize=(10.0, 5.0))    
 f, axarr = plt.subplots(3, sharex=True)
