@@ -1,5 +1,5 @@
 
-Code to reproduce the experiments of the poster "Network Inference from Neural Activation Time Series: A Comparative Review"  <br />
+Code to reproduce the experiments of the paper "Network Inference from Neural Activation Time Series: A Comparative Review"  <br />
 
 The scripts follow the order of the number in the title. If two scripts have the same number, they can be run simultaneously.  <br />
 The code was developed using python 2.7, in an ubuntu mate environment and tested in a laptop with Intel i7 CPU@2.4 GHz, 8 Gb RAM  <br />

@@ -42,7 +42,7 @@ for i in range(1,7) :
     if(rcnn.shape[1]==101):
         rcnn = np.delete(rcnn,0,1)
     
-    np.fill_diagonal(rcnn,0)  #---------------------------------------------------------????????????????????
+    np.fill_diagonal(rcnn,0) 
     aucs = compute_auc_roc(neuron_connections, rcnn)
     prcs = compute_auc_prc(neuron_connections, rcnn)
     log.write(",".join([str(aucs),str(prcs),str(i),"oasis","rcnn"]))
@@ -79,7 +79,6 @@ for i in range(1,7) :
     prcs = compute_auc_prc(neuron_connections, corr)
     log.write(",".join([str(aucs),str(prcs),str(i),"oasis","corr"]))
     log.write("\n")
-    
     
     #----------- graphical lasso
     glasso = np.array(pd.read_csv("../Data/results/glasso_"+str(i)+".csv"))

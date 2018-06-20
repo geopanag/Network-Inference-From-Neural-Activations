@@ -34,7 +34,6 @@ for i in range(1,7):
         influence = np.delete(influence,0,1)
     np.fill_diagonal(influence,0)  
     
-    
     #------------  precision
     glasso = np.array(pd.read_csv("../Data/results/glasso_"+str(i)+".csv"))
     glasso = np.delete(glasso,0,1)
@@ -49,9 +48,7 @@ for i in range(1,7):
     
     net = "Network "+str(i)
     
-   
     axes[i-1,0].imshow(influence, cmap='hot', interpolation='nearest')
-    #plt.
     if(i==1):
         axes[i-1,0].set_title("CIRUSIM",fontsize=18)
     axes[i-1,0].set_xticks([])
