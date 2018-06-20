@@ -4,7 +4,8 @@ Code to reproduce the experiments of the paper "Network Inference from Neural Ac
 The scripts follow the order of the number in the title. If two scripts have the same number, they can be run simultaneously.  <br />
 The code was developed using python 2.7, in an ubuntu mate environment and tested in a laptop with Intel i7 CPU@2.4 GHz, 8 Gb RAM  <br />
 
-Python packages used: pandas, sklearn, numpy, tensorflow, pickle, pyhawkes and OASIS <br />
+Python packages used: pandas, sklearn, numpy, tensorflow, pickle, pyhawkes <br />
+OASIS  for spike inference can be found in https://github.com/j-friedrich/OASIS<br />
 RCNN is accompanied with folders: <br />
 	-conutils from https://github.com/spoonsso/TFconnect <br />
 	-tfomics and model_zoo from https://github.com/spoonsso/tfomics <br />
