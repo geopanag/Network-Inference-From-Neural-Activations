@@ -8,7 +8,9 @@ Infer a network given activation time series using
 	Correlation
 	Partial Correlation with PCA
 	Partial Correlation with Graphical Lasso
+    Transfer Entropy
 """
+
 import os
 os.chdir("Path/To/Code")
 
@@ -120,7 +122,7 @@ for i in range(1,7) :
 
     print("Now in :"+str(i)+"-"+disc_meth)
    
-    activations_loc = "../Data/small/discretized_"+disc_meth+"_"+str(i)+".csv" 
+    activations_loc = "../Data/small/discretized_"+str(i)+".csv" 
     neuron_activations = pd.read_csv(activations_loc)
     neuron_activations = neuron_activations.values
     
@@ -128,7 +130,7 @@ for i in range(1,7) :
     start_time = time.time()
 
     correlation_mat = infer_correlation( neuron_activations )
-    pd.DataFrame(correlation_mat).to_csv("../Data/results/correlation_"+disc_meth+"_"+str(i)+".csv")
+    pd.DataFrame(correlation_mat).to_csv("../Data/results/correlation_"+str(i)+".csv")
 
     t = time.time() - start_time
     log.write("correlation time "+str(t)+" "+str(i)+" "+disc_meth)
@@ -138,17 +140,16 @@ for i in range(1,7) :
     start_time = time.time()
 
     precision_mat1 = infer_precision_pca( neuron_activations )
-    pd.DataFrame(precision_mat1).to_csv("../Data/results/pca_"+disc_meth+"_"+str(i)+".csv")
+    pd.DataFrame(precision_mat1).to_csv("../Data/results/pca_"+str(i)+".csv")
 
     t = time.time() - start_time
     log.write("precision pca time "+str(t)+" "+str(i)+" "+disc_meth)
     log.write("\n")
     
-    
     start_time = time.time()
 
     precision_mat2 = infer_precision_glasso( neuron_activations )
-    pd.DataFrame(precision_mat2).to_csv("../Data/results/glasso_"+disc_meth+"_"+str(i)+".csv")
+    pd.DataFrame(precision_mat2).to_csv("../Data/results/glasso_"+str(i)+".csv")
 
     t = time.time() - start_time
     log.write("precision glasso time "+str(t)+" "+str(i)+" "+disc_meth)

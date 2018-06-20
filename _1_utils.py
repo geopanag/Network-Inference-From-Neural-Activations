@@ -12,7 +12,7 @@ Some are costum made and others are taken and adjusted from the sources mentione
 from __future__ import division, print_function, absolute_import
 from copy import deepcopy
 import numpy as np
-from sklearn.metrics import roc_auc_score, roc_curve, precision_recall_curve, average_precision_score
+from sklearn.metrics import roc_auc_score, average_precision_score
 
 def parse_activations(loc_file,M = 179500,N=100,partial=False):
     """

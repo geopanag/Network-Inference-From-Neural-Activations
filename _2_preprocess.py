@@ -3,10 +3,13 @@
 """
 @author: george
 
-Preprocess the 6 datasets and store the discretized versions
+Preprocess the 6 datasets and store them
+1. Unscatter light effect
+2. Spike inference using OASIS
+3. Threshold at 0.12
 """
 import os
-os.chdir("Path/To/Code")
+os.chdir("/Path/To/Code")
 
 
 import time
@@ -48,7 +51,7 @@ for f in range(1,7):
     neural_dis = pd.DataFrame(neural_dis).apply(discretize,0)
     n_dis.append(neural_dis.iloc[1:3000,65])
     
-    neural_dis.to_csv("../Data/small/discretized_oasis_"+str(f)+".csv",index=False)
+    #neural_dis.to_csv("../Data/small/discretized_oasis_"+str(f)+".csv",index=False)
     
     t = time.time() - start_time
     print(t)
@@ -59,8 +62,7 @@ log.close()
 
 
 
-#Plot for the poster an example of discretization for the poster
-# keep one neuron from n1, one fron n2 and 1 from n3
+#---------- Plot for the poster an example of discretization for the poster
 
 plt.tick_params(
     axis='x',          # changes apply to the x-axis
@@ -69,14 +71,11 @@ plt.tick_params(
     top=False,         # ticks along the top edge are off
     labelbottom=False) 
 
-for i in range(0,99):
-    plt.figure(i)
-    plt.plot(neural_activations[1:3000,i])
-    plt.savefig("../Figures/value" + str(i) + ".png")
+#for i in range(0,99):
+#    plt.figure(i)
+#    plt.plot(neural_activations[1:3000,i])
+#    plt.savefig("../Figures/value" + str(i) + ".png")
 
-i=5
-plt.plot(n[i])
-plt.plot(n_dis[i])
 
 plt.figure(figsize=(10.0, 5.0))    
 f, axarr = plt.subplots(3, sharex=True)
@@ -85,28 +84,20 @@ axarr[0].plot(n[1])
 axarr[1].plot(n[5])
 axarr[2].plot(n[3])
 axarr[0].set_ylabel('Cell 1', fontsize=16)
+axarr[0].get_xaxis().set_visible(False)
 axarr[1].set_ylabel('Cell 2', fontsize=16)
+axarr[1].get_xaxis().set_visible(False)
 axarr[2].set_ylabel('Cell 3', fontsize=16)
+axarr[2].get_xaxis().set_visible(False)
 f.savefig("../Figures/activations.png")
 
 
 f, axarr = plt.subplots(3, sharex=True)
 axarr[0].plot(n_dis[1])
+axarr[0].get_xaxis().set_visible(False)
 axarr[1].plot(n_dis[5])
+axarr[1].get_xaxis().set_visible(False)
 axarr[2].plot(n_dis[3])
+axarr[2].get_xaxis().set_visible(False)
 f.savefig("../Figures/spikes.png")
 
-
-
-"""
-start_time = time.time()
-print("discretizing using chalearn")
-#---------_ Discretization using the ChaLearn approach
-neural_dis = chalearn_discretization(neural_activations)
-neural_dis = neural_dis[:(neural_dis.shape[0]-3),:]
-pd.DataFrame(neural_dis).to_csv("../Data/small/discretized_chalearn_"+str(i)+".csv",index=False)
-t = time.time() - start_time
-print(t)
-log.write("chalearn "+str(t)+" "+str(i))
-log.write("\n")
-"""

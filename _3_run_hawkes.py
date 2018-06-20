@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 @author: george
+
+Hawkes based on https://github.com/slinderman/pyhawkes/blob/master/experiments/chalearn_small_comparison.py
 """
 import time
 import pickle
@@ -96,11 +98,11 @@ for i in range(1,7):
         
     print("Now in :"+str(i))
     
-    neuron_activations = pd.read_csv("../Data/small/discretized_oasis2_"+str(i)+".csv" )
+    neuron_activations = pd.read_csv("../Data/small/discretized_oasis_"+str(i)+".csv" )
     neuron_activations = neuron_activations.values
     neuron_activations = neuron_activations.astype(int)
     
-	    #------- Run the hawkes model
+	    #------- Run the hawkes process model
     out = "../Data/hawkes/gibbs"+str(i)+"_"
     start_time = time.time()
     svi_models, timestamps = fit_network_hawkes_svi(neuron_activations, neuron_activations.shape[1], C, dt, dt_max, output_path=out)
@@ -108,10 +110,10 @@ for i in range(1,7):
     #------- Store the model and the connectivity matrix        
     W_svi = svi_models[-1].weight_model.expected_W()
     pd.DataFrame(W_svi).to_csv("../Data/results/hawkes_"+str(i)+".csv",index=False)
-    pickle.dump( svi_models, open( "../Data/results/hawkes_"+str(i)+".p", "wb" ) )
+    pickle.dump( svi_models, open( "../Data/hawkes/hawkes_"+str(i)+".p", "wb" ) )
     t = time.time() - start_time
     print(t)
-    log.write("time "+str(t)+" "+str(i))
+    log.write(str(t))
     log.write("\n")
     
 log.close()

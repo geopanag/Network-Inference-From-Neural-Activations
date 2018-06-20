@@ -1,13 +1,15 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
 """
 @author: george
+
+RCNN based on https://github.com/spoonsso/tfomics/blob/master/example/Connectomics.ipynb
 """
+import os
+os.chdir("/Path/To/Code")
+
 import time
 import numpy as np
-import sys
 from _1_utils import downsample,standardize_rows, parse_activations, parse_neuron_positions,parse_neuron_connections,unscatter
-
+import sys
 
 sys.path.append('../Tensor/tfomics')
 from tfomics import neuralnetwork as nn
@@ -52,11 +54,14 @@ for i in range(1,7):
     
 
 #-------------------------------- Corss Validation (1 network test, 5 train)
-time_log = file("../Data/results/time_rcnn.txt","a")
+log = file("../Data/results/time_rcnn.txt","a")
+
+
 for i in range(0,6):
     print("dataset "+str(i))
     
     start = time.time()
+    
     #-------------- Define which network is test and which train
     test_act = activations[i]
     train_act = activations[:i] + activations[(i + 1):]
@@ -84,27 +89,27 @@ for i in range(0,6):
 
     #--------- Build neural network class and compile it
     nnmodel = nn.NeuralNet(net, placeholders)
-    nnmodel.inspect_layers()
+    #nnmodel.inspect_layers()
 
-    nntrainer = nn.NeuralTrainer(nnmodel, optimization, save='best', filepath="../Data/results/dataset1_residual4.txt")
+    nntrainer = nn.NeuralTrainer(nnmodel, optimization, save='best', filepath="../Data/results/residual_"+str(i)+".txt")
     
     #---------  Train the NN
     train = {'inputs': X_train, 'targets': y_train, 'keep_prob_conv': 0.8, 'keep_prob_dense': 0.5, 'is_training': True}
     data = {'train': train}
-    learn.train_minibatch(nntrainer, data, batch_size=100, num_epochs=1, 
+
+    learn.train_minibatch(nntrainer, data, batch_size=100, num_epochs=100, 
                           patience=20, verbose=2, shuffle=True)
-    
+
     #---------  Predict the connectivity of the test network
-    pred_lbl =  conutils.valid_eval_tfomics_partialcorr(nntrainer,test_act,test_pcor)
+    pred_lbl =  conutils.valid_eval_tfomics_partialcorr(nntrainer,test_act,test_pcor,fragLen=320)
+    pred_lbl = np.reshape(pred_lbl, (100, 100))
     
-    #---------  Store the predictions and the respective ground truth connections
-    np.savetxt("../Data/results/rcnn_"+str(i)+".csv", pred_lbl, delimiter=",")
-    
+    #---------  Store the predictions
+    np.savetxt("../Data/results/rcnn_"+str(i+1)+".csv", pred_lbl, delimiter=",")
     
     t = time.time()-start
-    print(t)
-    time_log.write(str(t))
-    time_log.write("\n")
+    print("Time:"+str(t))
+    log.write(str(t))
+    log.write("\n")
     
-time_log.close()
-
+log.close()
