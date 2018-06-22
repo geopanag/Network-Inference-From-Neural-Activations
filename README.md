@@ -1,5 +1,5 @@
 
-["A Review of Network Inference Techniques for Neural Activation Time Series"](https://arxiv.org/abs/1806.08212)  <br />
+[A Review of Network Inference Techniques for Neural Activation Time Series](https://arxiv.org/abs/1806.08212)  <br />
 
 The scripts follow the order of the number in the title. If two scripts have the same number, they can be run simultaneously.  <br />
 The code was developed using python 2.7, in an ubuntu mate environment and tested in a laptop with Intel i7 CPU@2.4 GHz, 8 Gb RAM  <br />
