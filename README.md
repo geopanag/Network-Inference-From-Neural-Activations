@@ -1,7 +1,7 @@
 
 [A Review of Network Inference Techniques for Neural Activation Time Series](https://arxiv.org/abs/1806.08212)  <br />
 
-The scripts follow the order of the number in the title. If two scripts have the same number, they can be run simultaneously.  <br />
+The scripts follow the order below. If two scripts have the same number, they can be run simultaneously.  <br />
 The code was developed using python 2.7, in an ubuntu mate environment and tested in a laptop with Intel i7 CPU@2.4 GHz, 8 Gb RAM  <br />
 
 Python packages used: pandas, sklearn, numpy, tensorflow, pickle, pyhawkes <br />
@@ -17,20 +17,20 @@ Data-> Download the "small" dataset from https://www.kaggle.com/c/connectomics/d
 Results-> Will be filled with estimated connectivity matrices, evaluation metrics and time logs <br />
 
 
-_1_utils contains functions (either costum or found online, with appropriate reference) for data preprocessing and evaluation of the algorithms   <br />
+1 utils contains functions (either costum or found online, with appropriate reference) for data preprocessing and evaluation of the algorithms   <br />
 
-_2_preprocess runs the discretization algorithms and produces discritized versions of the activation series <br />
+2 preprocess runs the discretization algorithms and produces discritized versions of the activation series <br />
 
-_3_run_model_free runs correlation-based approaches <br />
+3 run_model_free runs correlation-based approaches <br />
 
-_3_run_hawkes runs hawkes process model using on pyhawkes <br />
+3 run_hawkes runs hawkes process model using on pyhawkes <br />
 
-_3_run_rcnn runs residual convolutional neural network with the aid of conutiles, tfomics and model_zoo <br />
+3 run_rcnn runs residual convolutional neural network with the aid of conutiles, tfomics and model_zoo <br />
 
-_3_run_influence runs the model that is based on influence estimation in social networks <br />
+3 run_influence runs the model that is based on influence estimation in social networks <br />
 
-_4_evaluate uses the predicted connectivity matrices stored in results and the ground truth to calculate evaluation metrics <br />
+4 evaluate uses the predicted connectivity matrices stored in results and the ground truth to calculate evaluation metrics <br />
 
-_5_plot_connectivity plots the predicted connectivity matrices and the ground truth<br />
+5 plot_connectivity plots the predicted connectivity matrices and the ground truth<br />
 
 
